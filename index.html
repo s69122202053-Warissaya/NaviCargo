@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ส่งไหนดี – NaviCargo Shipping Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef4fb;--card:#fff;--ink:#12233d;--mut:#66788f;--pri:#0a5cff;--acc:#ff7a1a;--line:#dde7f3;--side:#fff;--hero:#e3f0ff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1424;--card:#111f36;--ink:#eaf1fb;--mut:#93a4bb;--line:#21385a;--side:#0d192e;--hero:#12284a}}
+:root[data-theme="dark"]{--bg:#0a1424;--card:#111f36;--ink:#eaf1fb;--mut:#93a4bb;--line:#21385a;--side:#0d192e;--hero:#12284a}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Kanit',system-ui,sans-serif;display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside{background:var(--side);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;display:flex;flex-direction:column;gap:6px}
+.logo{display:flex;align-items:center;gap:10px;padding:0 6px 4px;text-decoration:none;color:var(--ink)}
+.logo b{font-size:24px;color:var(--pri);line-height:1}.logo small{display:block;font-size:11px;color:var(--mut)}
+.cap{font-size:11px;color:var(--mut);margin:14px 6px 4px}
+aside a.m,aside button.m{display:flex;gap:12px;align-items:center;padding:11px 14px;border-radius:12px;color:var(--ink);text-decoration:none;font:400 15px Kanit;background:none;border:0;cursor:pointer;text-align:left}
+aside a.m:hover,aside button.m:hover{background:var(--bg)}
+aside a.m.on{background:var(--pri);color:#fff}
+.sc{margin-top:auto;border-radius:16px;overflow:hidden;background:var(--hero);padding:14px;font-size:13px;font-weight:500}
+.sc svg{width:100%;display:block;margin-bottom:6px}
+main{padding:22px 30px 60px;min-width:0}
+.top{display:flex;justify-content:flex-end}
+.login{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);padding:6px 16px 6px 6px;border-radius:99px;font-size:14px}
+.login i{width:28px;height:28px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-style:normal;font-size:13px}
+.hero{background:linear-gradient(120deg,var(--hero),color-mix(in srgb,var(--hero) 60%,#6aa8ff));border-radius:24px;padding:34px;display:grid;grid-template-columns:1.1fr 1fr;gap:10px;align-items:end;margin-top:8px;overflow:hidden}
+.hero h1{margin:0 0 8px;font-size:clamp(30px,4vw,44px);line-height:1.15}
+.hero p{color:var(--mut);margin:0 0 20px;max-width:440px}
+.hero svg{width:100%;display:block;margin-bottom:-34px}
+.modes{display:flex;gap:10px;flex-wrap:wrap}
+.mode{background:var(--card);border:2px solid transparent;border-radius:16px;padding:10px 14px;min-width:96px;text-align:center;font:500 13px Kanit;color:var(--ink);cursor:pointer;line-height:1.3}
+.mode span{display:block;font-size:24px}
+.mode small{display:block;font-weight:300;color:var(--mut);font-size:11px}
+.mode.on{background:var(--pri);color:#fff}.mode.on small{color:#cfe0ff}
+.search{background:var(--card);border-radius:20px;padding:20px;margin-top:-4px;position:relative;box-shadow:0 10px 30px #0a5cff14;border:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end}
+.row2{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;margin-top:14px;align-items:end}
+label{font-size:12px;color:var(--mut);display:block;margin-bottom:4px}
+.f{border:1px solid var(--line);border-radius:14px;padding:8px 14px;background:var(--bg)}
+.f select,.f input{width:100%;border:0;background:none;color:var(--ink);font:400 15px Kanit;outline:0;padding:2px 0}
+.swap{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--pri);font-size:18px;cursor:pointer;margin-bottom:4px}
+.go{background:var(--pri);color:#fff;border:0;border-radius:14px;padding:16px;font:600 17px Kanit;cursor:pointer;height:100%;min-height:56px}
+.go:hover{filter:brightness(1.1)}
+h2{font-size:22px;margin:0}
+.hd{display:flex;justify-content:space-between;align-items:baseline;margin:32px 0 14px}
+.hd a{color:var(--pri);text-decoration:none;font-size:14px}
+.pop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;transition:.2s}
+.pc:hover{transform:translateY(-3px);box-shadow:0 12px 26px #0a5cff22}
+.pc svg{display:block;width:100%;height:auto}
+.pc div{padding:12px 14px;font-size:14px}.pc b{display:block;font-size:15px}.pc small{color:var(--mut)}
+#out{display:none;margin-top:26px}
+.plan{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px}
+.box svg{width:100%;height:auto;display:block}
+.e{stroke:var(--line);stroke-width:3;stroke-linecap:round}.e.on{stroke:var(--acc);stroke-width:5}
+.n circle{fill:var(--card);stroke:var(--pri);stroke-width:3;cursor:pointer}.n.on circle{fill:var(--pri)}
+.n text{font:600 12px Kanit;fill:var(--ink);text-anchor:middle}
+.w8{font:400 10px Kanit;fill:var(--mut);text-anchor:middle}
+.big{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0}.big b{display:block;font-size:26px;color:var(--pri)}.big small{color:var(--mut)}
+.steps{list-style:none;padding:0;margin:0}
+.steps li{padding:8px 0 8px 26px;position:relative;font-size:15px}
+.steps li:before{content:"";position:absolute;left:4px;top:15px;width:11px;height:11px;border-radius:50%;background:var(--pri)}
+.steps li:after{content:"";position:absolute;left:9px;top:27px;bottom:-8px;width:2px;background:var(--line)}
+.steps li:last-child:after{display:none}.steps li:last-child:before{background:var(--acc)}
+.track{display:flex;overflow-x:auto}
+.st{flex:1;min-width:110px;text-align:center;font-size:13px;color:var(--mut);position:relative;padding-top:26px}
+.st:before{content:"";position:absolute;top:8px;left:0;right:0;height:4px;background:var(--line)}
+.st:after{content:"";position:absolute;top:2px;left:calc(50% - 8px);width:16px;height:16px;border-radius:50%;background:var(--line)}
+.st.d{color:var(--ink)}.st.d:before,.st.d:after{background:var(--pri)}
+.ct{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ct .box p{margin:6px 0;color:var(--mut);font-size:15px}
+.ct input,.ct textarea,.ct select{width:100%;padding:11px 12px;margin:4px 0 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 15px Kanit}
+.ok{display:none;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px}
+
+.tree{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px}
+.tree svg{width:100%;height:auto;display:block}
+.tree text{font:600 12px Kanit;fill:var(--ink);text-anchor:middle}
+.tree .lv{font:400 10px Kanit;fill:var(--mut);text-anchor:middle}
+
+@media(max-width:900px){
+body{grid-template-columns:1fr}
+aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;padding:10px;align-items:center;overflow-x:auto}
+.cap,.sc,.logo small{display:none}aside a.m,aside button.m{padding:8px 10px;font-size:13px}
+main{padding:14px}.hero,.plan,.ct{grid-template-columns:1fr}.hero svg{display:none}
+.row,.row2{grid-template-columns:1fr}.swap{justify-self:center}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="sk0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f4fae"/><stop offset=".55" stop-color="#7fa8e6"/><stop offset="1" stop-color="#ffc58c"/></linearGradient>
+<linearGradient id="sk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2683a"/><stop offset="1" stop-color="#ffdcae"/></linearGradient>
+<linearGradient id="sk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f97b8"/><stop offset="1" stop-color="#e6f6e9"/></linearGradient>
+<linearGradient id="sk3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b3fb8"/><stop offset="1" stop-color="#f4b9c8"/></linearGradient>
+<linearGradient id="wt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a71cf"/><stop offset="1" stop-color="#0a2a5e"/></linearGradient>
+<linearGradient id="tb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b9c7dd"/></linearGradient>
+<linearGradient id="ca" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a45"/><stop offset="1" stop-color="#c94d08"/></linearGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#fff6d0" stop-opacity=".95"/><stop offset="1" stop-color="#fff6d0" stop-opacity="0"/></radialGradient>
+<pattern id="win" width="6" height="8" patternUnits="userSpaceOnUse"><rect x="1.2" y="2" width="2.6" height="3.6" fill="#ffe5a0" opacity=".85"/></pattern>
+</defs></svg>
+<aside>
+<a class="logo" href="#top"><svg width="38" height="38" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#0a5cff"/><path d="M10 27l10-15 10 15" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="12" r="3" fill="#ff7a1a"/><path d="M8 31h24" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg><div><b>ส่งไหนดี</b><small>NaviCargo Shipping Planner</small></div></a>
+<div class="cap">ระบบวางแผนเส้นทางขนส่งสินค้า</div>
+<a class="m on" href="#search">🔍 ค้นหาเส้นทาง</a>
+<a class="m" href="#popular">📍 เส้นทางยอดนิยม</a>
+<a class="m" href="#svctree">🗂️ หมวดหมู่บริการ</a>
+<a class="m" href="#track">📦 ติดตามพัสดุ</a>
+<a class="m" href="#contact">💬 ติดต่อเรา</a>
+<button class="m" onclick="tg()">⚙️ ตั้งค่า (โหมดมืด)</button>
+<div class="sc"><svg viewBox="0 0 200 70"><g fill="#9fc3f5"><rect x="10" y="28" width="22" height="42"/><rect x="38" y="14" width="18" height="56"/><rect x="62" y="34" width="26" height="36"/><rect x="94" y="8" width="16" height="62"/><rect x="116" y="26" width="24" height="44"/><rect x="146" y="38" width="20" height="32"/><rect x="170" y="20" width="20" height="50"/></g><rect y="62" width="200" height="8" fill="#0a5cff"/></svg>เส้นทางสะดวก<br>ชีวิตส่งของง่ายขึ้น</div>
+</aside>
+
+<main id="top">
+<div class="top"><div class="login"><i>👤</i>เข้าสู่ระบบ</div></div>
+<div class="hero">
+<div><h1>วันนี้จะส่งไปไหน?</h1>
+<p>ค้นหาเส้นทางขนส่งพร้อมระยะทาง เวลา และค่าบริการ เพื่อการส่งพัสดุที่สะดวกและคุ้มค่าที่สุด</p>
+<div class="modes" id="modes">
+<button class="mode on" data-m="truck"><span>🚚</span>รถบรรทุก<small>ประหยัด</small></button>
+<button class="mode" data-m="ship"><span>🚢</span>ทางเรือ<small>ปริมาณมาก</small></button>
+<button class="mode" data-m="exp"><span>⚡</span>ส่งด่วน<small>ถึงไว</small></button>
+<button class="mode" data-m="pop"><span>⭐</span>เส้นทางยอดนิยม<small>แนะนำ</small></button>
+</div></div>
+<svg id="heroArt" viewBox="0 0 220 110" style="border-radius:18px"></svg>
+</div>
+
+<div class="search" id="search">
+<div class="row">
+<div class="f"><label>🔵 ต้นทาง</label><select id="from"></select></div>
+<button class="swap" onclick="sw()" title="สลับ">⇅</button>
+<div class="f"><label>🟠 ปลายทาง</label><select id="to"></select></div>
+</div>
+<div class="row2">
+<div class="f"><label>📅 วันที่รับพัสดุ</label><input type="date" id="dt"></div>
+<div class="f"><label>⚖️ น้ำหนัก (กก.)</label><input type="number" id="kg" value="5" min="1" max="500"></div>
+<button class="go" onclick="calc(true)">🔍 ค้นหาเส้นทาง</button>
+</div>
+</div>
+
+<div id="out">
+<div class="hd"><h2>เส้นทางที่เหมาะสมที่สุด</h2></div>
+<div class="plan">
+<div class="box"><svg id="map" viewBox="0 0 400 520"></svg></div>
+<div class="box"><div id="res"></div></div>
+</div></div>
+
+<div class="hd" id="popular"><h2>เส้นทางยอดนิยม</h2><a href="#search">คลิกการ์ดเพื่อค้นหา →</a></div>
+<div class="pop" id="pop"></div>
+
+<div class="hd" id="track"><h2>ติดตามพัสดุ</h2><span style="color:var(--mut);font-size:14px">ตัวอย่าง NC-2609-48213</span></div>
+<div class="box"><b>กรุงเทพฯ → หาดใหญ่</b> <span style="color:var(--mut)">· คาดว่าจะถึง พรุ่งนี้ 14:00</span>
+<div class="track"><div class="st d">รับพัสดุ<br>08:10</div><div class="st d">ศูนย์คัดแยก กทม.<br>10:35</div><div class="st d">ศูนย์สุราษฎร์ฯ<br>23:40</div><div class="st">ศูนย์หาดใหญ่</div><div class="st">ถึงผู้รับ</div></div></div>
+
+<div class="hd" id="svctree"><h2>หมวดหมู่บริการขนส่ง</h2><span style="color:var(--mut);font-size:14px">โครงสร้างบริการทั้งหมดของ NaviCargo</span></div>
+<div class="tree"><svg id="svcTreeSvg" viewBox="0 0 900 260"></svg></div>
+
+<div class="hd" id="contact"><h2>ติดต่อเรา</h2><span style="color:var(--mut);font-size:14px">สอบถามบริการหรือเว็บไซต์นี้</span></div>
+<div class="ct">
+<div class="box"><p>📞 <b style="color:var(--ink)">1234</b> (โทรฟรี) ทุกวัน 07:00–21:00</p><p>✉️ support@navicargo.example</p><p>📍 123 ถนนพระราม 4 เขตคลองเตย กรุงเทพฯ 10110</p><p>💬 ไลน์ทางการ @navicargo</p></div>
+<div class="box"><b>ส่งข้อความถึงเรา</b><br>
+<input id="cn" placeholder="ชื่อ"><input id="cm" placeholder="อีเมลหรือเบอร์โทร">
+<select><option>สอบถามบริการขนส่ง</option><option>แจ้งปัญหาการใช้งานเว็บไซต์</option><option>ข้อเสนอแนะ</option></select>
+<textarea id="cx" rows="3" placeholder="ข้อความ"></textarea>
+<button class="go" style="width:100%;height:auto;min-height:0;padding:12px" onclick="sendMsg()">ส่งข้อความ</button>
+<div class="ok" id="ok">✅ ขอบคุณค่ะ เราได้รับข้อความแล้ว</div></div>
+</div>
+</main>
+
+<script>
+const N={cm:['เชียงใหม่',190,50],pl:['พิษณุโลก',190,150],kk:['ขอนแก่น',310,200],bk:['กรุงเทพฯ',190,260],lc:['แหลมฉบัง',290,330],sr:['สุราษฎร์ฯ',150,410],hy:['หาดใหญ่',210,485]};
+const E=[['cm','pl',290],['pl','bk',380],['pl','kk',340],['kk','bk',450],['bk','lc',120],['bk','sr',650],['sr','hy',320],['kk','lc',520],['lc','sr',750]];
+const adj={};Object.keys(N).forEach(k=>adj[k]=[]);E.forEach(([a,b,w])=>{adj[a].push([b,w]);adj[b].push([a,w])});
+function route(s,t){const d={},p={},q=new Set(Object.keys(N));Object.keys(N).forEach(k=>d[k]=1e9);d[s]=0;
+while(q.size){let u=[...q].reduce((a,b)=>d[a]<d[b]?a:b);q.delete(u);if(u==t)break;adj[u].forEach(([v,w])=>{if(d[u]+w<d[v]){d[v]=d[u]+w;p[v]=u}})}
+const path=[t];while(path[0]!=s)path.unshift(p[path[0]]);return{path,km:d[t]}}
+const $=id=>document.getElementById(id),M={truck:[55,.06,1],ship:[32,.035,1],exp:[80,.11,1.6],pop:[55,.06,1]};let mode='truck';
+function tg(){const r=document.documentElement,dk=getComputedStyle(r).getPropertyValue('--bg').trim()=='#0a1424';r.dataset.theme=dk?'light':'dark'}
+let h='';E.forEach(([a,b,w])=>{const[A,B]=[N[a],N[b]];h+=`<line class="e" id="e${a}${b}" x1="${A[1]}" y1="${A[2]}" x2="${B[1]}" y2="${B[2]}"/><text class="w8" x="${(A[1]+B[1])/2+12}" y="${(A[2]+B[2])/2}">${w} กม.</text>`});
+Object.entries(N).forEach(([k,[n,x,y]])=>h+=`<g class="n" id="n${k}" data-k="${k}"><circle cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y-20}">${n}</text></g>`);
+$('map').innerHTML=h;
+const opts=Object.entries(N).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');
+$('from').innerHTML=opts;$('to').innerHTML=opts;$('from').value='bk';$('to').value='cm';
+const now=new Date();$('dt').value=now.toISOString().slice(0,10);
+function sw(){const a=$('from').value;$('from').value=$('to').value;$('to').value=a}
+function est(s,t,kg=1,m=mode){const r=route(s,t),[sp,rt]=M[m];const hrs=r.km/sp+(r.path.length-1)*1.5;return{...r,hrs,price:Math.round(45+r.km*rt*(1+kg/40))}}
+function calc(scroll){const s=$('from').value,t=$('to').value,kg=Math.max(1,+$('kg').value||1);
+document.querySelectorAll('.e,.n').forEach(e=>e.classList.remove('on'));$('out').style.display='block';
+if(s==t){$('res').innerHTML='<p>กรุณาเลือกต้นทางและปลายทางที่ต่างกัน</p>';return}
+const r=est(s,t,kg);r.path.forEach((k,i)=>{$('n'+k).classList.add('on');if(i){const a=r.path[i-1];($('e'+a+k)||$('e'+k+a)).classList.add('on')}});
+const d=new Date($('dt').value||now);d.setDate(d.getDate()+Math.ceil(r.hrs/24));
+const nm={truck:'รถบรรทุก',ship:'ทางเรือ',exp:'ส่งด่วน',pop:'รถบรรทุก'}[mode];
+$('res').innerHTML=`<b style="font-size:18px">${N[s][0]} → ${N[t][0]}</b><div style="color:var(--mut);font-size:13px">บริการ${nm} · ${kg} กก.</div>
+<div class="big"><div><b>${r.km.toLocaleString()}</b><small>กิโลเมตร</small></div><div><b>${Math.round(r.hrs)} ชม.</b><small>เวลาโดยประมาณ</small></div><div><b>฿${r.price.toLocaleString()}</b><small>ค่าส่ง</small></div></div>
+<ul class="steps">${r.path.map((k,i)=>`<li>${i==0?'รับพัสดุที่ ':i==r.path.length-1?'ถึงปลายทาง ':'ผ่านศูนย์ '}${N[k][0]}</li>`).join('')}</ul>
+<div style="margin-top:10px;font-size:14px;color:var(--mut)">คาดว่าจะถึง ${d.toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'})}</div>`;
+if(scroll)$('out').scrollIntoView({behavior:'smooth',block:'start'})}
+$('map').addEventListener('click',e=>{const g=e.target.closest('.n');if(!g)return;const k=g.dataset.k;if($('from').value!=k){$('to').value=k;calc()}});
+$('modes').addEventListener('click',e=>{const b=e.target.closest('.mode');if(!b)return;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.m;if(mode=='pop')$('popular').scrollIntoView({behavior:'smooth'});else if($('out').style.display=='block')calc()});
+// การ์ดเส้นทางยอดนิยม
+const scenes=['city','port','road','city'];
+const sun=(x,y)=>`<circle cx="${x}" cy="${y}" r="28" fill="url(#gl)"/><circle cx="${x}" cy="${y}" r="6" fill="#fff6d8"/>`;
+const city=(y,c)=>[[6,24,34],[24,18,52],[38,22,30],[56,16,60],[70,26,42],[94,20,66],[112,24,38],[132,18,56],[148,28,46],[174,20,62],[192,26,40]].map(([x,w,t])=>`<rect x="${x}" y="${y-t}" width="${w}" height="${t}" fill="${c}"/><rect x="${x}" y="${y-t}" width="${w}" height="${t}" fill="url(#win)"/>`).join('')+`<rect x="103" y="${y-76}" width="1.6" height="10" fill="${c}"/>`;
+const crane=(x,y)=>`<g stroke="#18243d" stroke-width="1.6" fill="none"><path d="M${x} ${y}v-44M${x+12} ${y}v-44M${x-8} ${y-44}h46M${x-8} ${y-44}l10-11h26M${x+4} ${y-55}l16 11"/></g>`;
+const boxes=(x,y,n,m)=>{let s='',c=['#e8562a','#0a5cff','#f2b632','#2c9c6a','#c93b3b','#e9eef7'];for(let r=0;r<m;r++)for(let i=0;i<n;i++)s+=`<rect x="${x+i*11}" y="${y-(r+1)*7}" width="10.4" height="6.4" fill="${c[(i*3+r*2)%6]}"/><path d="M${x+i*11+2} ${y-(r+1)*7+1}v4.4M${x+i*11+5} ${y-(r+1)*7+1}v4.4M${x+i*11+8} ${y-(r+1)*7+1}v4.4" stroke="#0004" stroke-width=".6"/>`;return s};
+const truck=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="48" cy="31" rx="54" ry="4" fill="#000" opacity=".4"/><rect width="66" height="26" rx="2" fill="url(#tb)"/><rect y="12" width="66" height="3" fill="#0a5cff"/><text x="7" y="9.5" font-size="6.5" font-weight="700" fill="#0a5cff" font-family="Kanit">NaviCargo</text><path d="M68 6h14l8 9v11H68z" fill="url(#ca)"/><path d="M76 8h5l6 7H76z" fill="#bfe0ff"/><ellipse cx="102" cy="22" rx="13" ry="3.4" fill="url(#gl)"/><circle cx="90" cy="21" r="1.7" fill="#fffbd0"/>${[12,26,76].map(c=>`<circle cx="${c}" cy="27" r="5.4" fill="#0d0d10"/><circle cx="${c}" cy="27" r="2.3" fill="#9aa6b8"/>`).join('')}</g>`;
+const road=(y)=>`<rect y="${y}" width="220" height="${110-y}" fill="#232c3b"/><rect y="${y}" width="220" height="1.5" fill="#ffffff33"/><path d="M0 ${y+13}H220" stroke="#fff" stroke-dasharray="12 8" stroke-width="1.6" opacity=".7"/>`;
+function body(t){const R='<rect width="220" height="110" fill="url(#sk';
+if(t=='hero')return `${R}0)"/>${sun(172,58)}<g opacity=".5">${city(74,'#7192d0')}</g><rect y="68" width="220" height="22" fill="url(#wt)"/>${crane(14,80)}${crane(36,80)}${boxes(150,80,5,3)}${road(88)}${truck(60,62,1.25)}`;
+if(t=='city')return `${R}0)"/>${sun(168,50)}<g opacity=".5">${city(80,'#7192d0')}</g>${city(96,'#182b58')}<rect y="94" width="220" height="16" fill="#131b2c"/><path d="M0 102H220" stroke="#ffd27a" stroke-dasharray="10 8" stroke-width="1.5"/>`;
+if(t=='port')return `${R}1)"/>${sun(158,56)}<rect y="62" width="220" height="48" fill="url(#wt)"/><g fill="#ffe2ad" opacity=".6"><rect x="146" y="66" width="24" height="1.6"/><rect x="150" y="71" width="16" height="1.6"/><rect x="153" y="77" width="10" height="1.6"/></g><path d="M14 72h128l-12 16H28z" fill="#7a1f1f"/><rect x="14" y="70" width="128" height="3" fill="#1d1d24"/>${boxes(30,70,9,3)}<rect x="152" y="74" width="68" height="36" fill="#2b3547"/>${crane(172,74)}${boxes(190,80,3,2)}`;
+return `${R}2)"/><path d="M0 70q40-24 90-6t130-8v54H0z" fill="#3a9a80"/><path d="M0 82q60-20 120-4t100-2v34H0z" fill="#256b5a"/>${road(88)}${truck(58,64,.95)}`}
+function scene(t,i){return `<svg viewBox="0 0 220 110">${body(t).replace(/url\(#sk\d\)/,`url(#sk${t=='city'&&i==3?3:{city:0,port:1,road:2}[t]})`)}</svg>`}
+$('heroArt').innerHTML=body('hero');
+const PR=[['bk','cm'],['bk','lc'],['bk','hy'],['kk','bk']];
+$('pop').innerHTML=PR.map(([a,b],i)=>{const r=est(a,b);return`<div class="pc" onclick="pick('${a}','${b}')">${scene(scenes[i],i)}<div><b>${N[a][0]} → ${N[b][0]}</b><small>🚚 ~ ${Math.round(r.hrs)} ชม. · ${r.km.toLocaleString()} กม.<br>เริ่มต้น ฿${r.price.toLocaleString()}</small></div></div>`}).join('');
+function pick(a,b){$('from').value=a;$('to').value=b;calc(true)}
+
+// โครงสร้างหมวดหมู่บริการขนส่ง (Tree)
+const ST={n:'บริการขนส่งทั้งหมด',c:[
+  {n:'รถบรรทุก',c:[{n:'รถกระบะ'},{n:'6 ล้อ'},{n:'เทรลเลอร์'}]},
+  {n:'ทางเรือ',c:[{n:'เรือคอนเทนเนอร์'},{n:'เรือ RoRo'}]},
+  {n:'ส่งด่วน',c:[{n:'ส่งวันเดียว'},{n:'ข้ามคืน'},{n:'ด่วนพิเศษ 3 ชม.'}]}
+]};
+(function(){
+let leaves=0;(function cnt(n){if(!n.c){n.i=leaves++;return}n.c.forEach(cnt)})(ST);
+const W=900,sp=W/leaves,cols=['#0a5cff','#12a05a','#ff7a1a'];
+function draw(n,d,col){n.y=36+d*95;
+  n.x=n.c?n.c.reduce((a,c)=>a+draw(c,d+1,col).x,0)/n.c.length:sp*(n.i+.5);
+  n.col=d==0?'#0d2a5c':col;return n}
+ST.c.forEach((r,i)=>draw(r,1,cols[i]));
+ST.y=36;ST.x=ST.c.reduce((a,c)=>a+c.x,0)/ST.c.length;ST.col='#0d2a5c';
+let s='';
+(function lines(n){(n.c||[]).forEach(c=>{s+=`<path d="M${n.x} ${n.y}C${n.x} ${n.y+48} ${c.x} ${c.y-48} ${c.x} ${c.y}" fill="none" stroke="${c.col}" stroke-width="3" opacity=".6"/>`;lines(c)})})(ST);
+(function nodes(n,d){const r=d==0?18:d==1?14:10;
+  s+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${n.col}"/><text x="${n.x}" y="${n.y+(d==0?-26:d==1?-22:24)}">${n.n}</text>`;
+    (n.c||[]).forEach(c=>nodes(c,d+1))})(ST,0);
+document.getElementById('svcTreeSvg').innerHTML=s;
+})();
+
+function sendMsg(){if(!$('cn').value.trim()||!$('cx').value.trim()){alert('กรุณากรอกชื่อและข้อความ');return}
+$('ok').style.display='block';['cn','cm','cx'].forEach(i=>$(i).value='')}
+</script>
+</body>
+</html>
